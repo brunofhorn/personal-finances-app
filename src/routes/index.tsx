@@ -5,9 +5,7 @@ import { PrivateRoutes } from './PrivateRoutes'
 import { SystemBars } from 'react-native-edge-to-edge'
 
 const NavigationRoutes = () => {
-    const [user, setUser] = useState({
-        name: '',
-    })
+    const [user, setUser] = useState(undefined)
 
     const Routes = useCallback(() => {
         if (!user) {
