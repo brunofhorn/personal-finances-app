@@ -1,7 +1,11 @@
 import { AppButton } from "@/components/AppButton"
 import { AppInput } from "@/components/AppInput"
+import { PublicStackParamsList } from "@/routes/PublicRoutes"
+import { NavigationProp, useNavigation } from "@react-navigation/native"
 import { useForm } from "react-hook-form"
 import { Text, View } from "react-native"
+import { yupResolver } from '@hookform/resolvers/yup'
+import { schema } from "./schema"
 
 export interface FormLoginParams {
     email: string
@@ -9,7 +13,15 @@ export interface FormLoginParams {
 }
 
 export const LoginForm = () => {
-    const { control, handleSubmit, formState: { isSubmitting } } = useForm<FormLoginParams>()
+    const { control, handleSubmit, formState: { isSubmitting } } = useForm<FormLoginParams>({
+        defaultValues: {
+            email: "",
+            password: ""
+        },
+        resolver: yupResolver(schema)
+    })
+
+    const navigation = useNavigation<NavigationProp<PublicStackParamsList>>()
 
     return (
         <>
@@ -35,8 +47,14 @@ export const LoginForm = () => {
 
                 <View>
                     <Text className="mb-6 text-gray-300 text-base">Ainda não possui uma conta?</Text>
-                    
-                    <AppButton iconName="arrow-forward" mode="outline">Cadastrar</AppButton>
+
+                    <AppButton
+                        iconName="arrow-forward"
+                        mode="outline"
+                        onPress={() => navigation.navigate("Register")}
+                    >
+                        Cadastrar
+                    </AppButton>
                 </View>
             </View>
         </>
