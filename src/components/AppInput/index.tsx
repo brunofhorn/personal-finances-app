@@ -17,9 +17,11 @@ export const AppInput = <T extends FieldValues>({
     name,
     label,
     leftIconName,
+    secureTextEntry,
     ...rest
 }: AppInputParams<T>) => {
     const [isFocused, setIsFocused] = useState<boolean>(false)
+    const [showPassword, setShowPassword] = useState<boolean>(secureTextEntry ?? true)
     const inputRef = useRef<TextInput>(null)
 
     const checkFocus = () => {
@@ -36,7 +38,7 @@ export const AppInput = <T extends FieldValues>({
                 <View className="w-full mt-4">
                     {label && (
                         <Text
-                            className={clsx("mb-2 mt-3 text-base", isFocused ? "text-accent-brand": "text-gray-600")}
+                            className={clsx("mb-2 mt-3 text-base", isFocused ? "text-accent-brand" : "text-gray-600")}
                         >
                             {label}
                         </Text>
@@ -46,7 +48,7 @@ export const AppInput = <T extends FieldValues>({
                         {leftIconName && (
                             <MaterialIcons
                                 name={leftIconName}
-                                color={isFocused ? colors["accent-brand"] :colors.gray[600]}
+                                color={isFocused ? colors["accent-brand"] : colors.gray[600]}
                                 size={24}
                                 className="mr-2"
                             />
@@ -59,9 +61,20 @@ export const AppInput = <T extends FieldValues>({
                             className="flex-1 text-base text-gray-500"
                             onFocus={checkFocus}
                             onEndEditing={checkFocus}
+                            secureTextEntry={showPassword}
                             ref={inputRef}
                             {...rest}
                         />
+
+                        {secureTextEntry && (
+                            <TouchableOpacity onPress={() => setShowPassword((oldValue) => !oldValue)}>
+                                <MaterialIcons
+                                    name={showPassword ? "visibility" : "visibility-off"}
+                                    color={colors.gray[600]}
+                                    size={24}
+                                />
+                            </TouchableOpacity>
+                        )}
                     </TouchableOpacity>
                 </View>
             )}
