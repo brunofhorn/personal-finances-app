@@ -6,8 +6,10 @@ import { NavigationProp, useNavigation } from "@react-navigation/native"
 import { useForm } from "react-hook-form"
 import { Text, View } from "react-native"
 import { schema } from "./schema"
+import { useAuthContext } from "@/context/auth.context"
+import { AxiosError } from "axios"
 
-interface FormRegisterProps {
+export interface FormRegisterParams {
     email: string
     name: string
     password: string
@@ -15,7 +17,7 @@ interface FormRegisterProps {
 }
 
 export const RegisterForm = () => {
-    const { control, handleSubmit, formState: { isSubmitting } } = useForm<FormRegisterProps>({
+    const { control, handleSubmit, formState: { isSubmitting } } = useForm<FormRegisterParams>({
         defaultValues: {
             email: "",
             name: "",
@@ -25,7 +27,19 @@ export const RegisterForm = () => {
         resolver: yupResolver(schema)
     })
 
+    const { handleRegister } = useAuthContext()
+
     const navigation = useNavigation<NavigationProp<PublicStackParamsList>>()
+
+    const onSubmit = async (userRegisterData: FormRegisterParams) => {
+        try {
+            await handleRegister(userRegisterData)
+        } catch (error) {
+            if (error instanceof AxiosError) {
+                console.error(error?.response?.data)
+            }
+        }
+    }
 
     return (
         <>
@@ -64,7 +78,12 @@ export const RegisterForm = () => {
             />
 
             <View className="flex-1 justify-between mt-8 mb-6 min-h-[200px]">
-                <AppButton iconName="arrow-forward">Cadastrar</AppButton>
+                <AppButton
+                    iconName="arrow-forward"
+                    onPress={handleSubmit(onSubmit)}
+                >
+                    Cadastrar
+                </AppButton>
 
                 <View>
                     <Text className="mb-6 text-gray-300 text-base">Já possui uma conta?</Text>

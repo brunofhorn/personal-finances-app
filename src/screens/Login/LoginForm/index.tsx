@@ -6,6 +6,8 @@ import { useForm } from "react-hook-form"
 import { Text, View } from "react-native"
 import { yupResolver } from '@hookform/resolvers/yup'
 import { schema } from "./schema"
+import { useAuthContext } from "@/context/auth.context"
+import { AxiosError } from "axios"
 
 export interface FormLoginParams {
     email: string
@@ -21,7 +23,19 @@ export const LoginForm = () => {
         resolver: yupResolver(schema)
     })
 
+    const { handleAuthenticate } = useAuthContext()
+
     const navigation = useNavigation<NavigationProp<PublicStackParamsList>>()
+
+    const onSubmit = async (userData: FormLoginParams) => {
+        try {
+            await handleAuthenticate(userData)
+        } catch (error) {
+            if (error instanceof AxiosError) {
+                console.error(error?.response?.data)
+            }
+        }
+    }
 
     return (
         <>
@@ -43,7 +57,12 @@ export const LoginForm = () => {
             />
 
             <View className="flex-1 justify-between mt-8 mb-6 min-h-[250px]">
-                <AppButton iconName="arrow-forward">Login</AppButton>
+                <AppButton
+                    iconName="arrow-forward"
+                    onPress={handleSubmit(onSubmit)}
+                >
+                    Login
+                </AppButton>
 
                 <View>
                     <Text className="mb-6 text-gray-300 text-base">Ainda não possui uma conta?</Text>
