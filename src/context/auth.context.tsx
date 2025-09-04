@@ -56,7 +56,11 @@ export const AutheContextProvider: FC<PropsWithChildren> = ({ children }) => {
         }
     }
 
-    const handleLogout = () => { }
+    const handleLogout = async () => {
+        await AsyncStorage.clear()
+        setUser(null)
+        setToken(null)
+    }
 
     return (
         <AuthContext.Provider value={{
