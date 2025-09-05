@@ -1,5 +1,8 @@
 import { personalFinances } from "@/shared/api/personal-finances";
-import { CreateTransactionInterface, GetTransactionResponse } from "@/shared/interfaces/https/create-transaction-request";
+import {
+  CreateTransactionInterface,
+  GetTransactionResponse,
+} from "@/shared/interfaces/https/create-transaction-request";
 import { GetTransactionsParams } from "@/shared/interfaces/https/get-transaction-request";
 import { TransactionCategory } from "@/shared/interfaces/https/transaction-category-response";
 import qs from "qs";
@@ -20,7 +23,9 @@ export const createTransaction = async (
   await personalFinances.post("/transaction", transaction);
 };
 
-export const getTransactions = async (params: GetTransactionsParams): Promise<GetTransactionResponse> => {
+export const getTransactions = async (
+  params: GetTransactionsParams
+): Promise<GetTransactionResponse> => {
   const { data } = await personalFinances.get<GetTransactionResponse>(
     "/transaction",
     {
@@ -30,4 +35,8 @@ export const getTransactions = async (params: GetTransactionsParams): Promise<Ge
   );
 
   return data;
+};
+
+export const deleteTransaction = async (id: number) => {
+  await personalFinances.delete(`/transaction/${id}`);
 };
