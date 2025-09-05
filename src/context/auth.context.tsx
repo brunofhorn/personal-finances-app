@@ -1,7 +1,7 @@
 import { FormLoginParams } from "@/screens/Login/LoginForm"
 import { FormRegisterParams } from "@/screens/Register/RegisterForm"
 import { IAuthenticateResponse } from "@/shared/interfaces/https/authenticate-response"
-import { IUser } from "@/shared/interfaces/https/user-interface"
+import { IUser } from "@/shared/interfaces/user-interface"
 import * as authService from "@/shared/services/personal-finances/auth.service"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { createContext, FC, PropsWithChildren, useContext, useState } from "react"
