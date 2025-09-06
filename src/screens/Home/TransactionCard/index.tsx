@@ -8,6 +8,8 @@ import { colors } from "@/shared/colors"
 import { TransactionTypes } from "@/shared/enums/transaction-types"
 import clsx from "clsx"
 import { RightAction } from "./RightAction"
+import { LeftAction } from "./LeftAction"
+import { MoneyMapper } from "@/shared/utils/money-mapper"
 
 interface TransactionCardParams {
     transaction: Transaction
@@ -15,7 +17,7 @@ interface TransactionCardParams {
 
 export const TransactionCard: FC<TransactionCardParams> = ({ transaction }) => {
     const isExpense = transaction.type.id === TransactionTypes.EXPENSE
-    
+
     return (
         <>
             <Swipeable
@@ -26,14 +28,16 @@ export const TransactionCard: FC<TransactionCardParams> = ({ transaction }) => {
                     width: '90%',
                     marginBottom: 16
                 }}
-                renderRightActions={()=> <RightAction transactionId={transaction.id} />}
+                renderRightActions={() => <RightAction transactionId={transaction.id} />}
+                renderLeftActions={() => <LeftAction transaction={transaction} />}
                 overshootRight={false}
+                overshootLeft={false}
             >
                 <View className="h-[140] bg-background-tertiary rounded-[6] p-6">
                     <Text className="text-white text-base">{transaction.description}</Text>
                     <Text className={clsx("text-2xl font-bold mt-2", isExpense ? "text-accent-red" : "text-accent-brand-light")}>
                         {isExpense && "-"}
-                        R$ {transaction.value.toFixed(2).replace(".",",")}
+                        R$ {MoneyMapper(transaction.value)}
                     </Text>
                     <View className="flex-row w-full justify-between items-center">
                         <View className="items-center flex-row mt-3">
