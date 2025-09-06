@@ -3,9 +3,12 @@ import { colors } from "@/shared/colors"
 import { Text, TextInput, TouchableOpacity, View } from "react-native"
 import { MaterialIcons } from "@expo/vector-icons"
 import { useEffect, useState } from "react"
+import { useBottomSheetContext } from "@/context/bottomsheet.context"
+import { TransactionsFilters } from "./TransactionsFilters"
 export const FilterInput = () => {
     const [text, setText] = useState<string>("")
     const { pagination, searchText, setSearchText, fetchTransactions } = useTransactionContext()
+    const { openBottomSheet } = useBottomSheetContext()
 
     useEffect(() => {
         const handler = setTimeout(() => {
@@ -41,7 +44,7 @@ export const FilterInput = () => {
                     onChangeText={setText}
                 />
 
-                <TouchableOpacity className="absolute right-0">
+                <TouchableOpacity onPress={() => openBottomSheet(<TransactionsFilters />, 1)} className="absolute right-0">
                     <MaterialIcons name="filter-list" color={colors["accent-brand-light"]} size={26} className="mr-3" />
                 </TouchableOpacity>
             </TouchableOpacity>
