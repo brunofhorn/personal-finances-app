@@ -78,7 +78,7 @@ export const RegisterForm = () => {
                 secureTextEntry
             />
 
-            <View className="flex-1 justify-between mt-8 mb-6 min-h-[200px]">
+            <View className="flex-1 justify-between mt-8 mb-6 min-h-[200]">
                 <AppButton
                     iconName="arrow-forward"
                     onPress={handleSubmit(onSubmit)}

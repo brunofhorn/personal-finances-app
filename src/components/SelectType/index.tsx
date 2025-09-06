@@ -19,7 +19,7 @@ export const TransactionTypeSelector: FC<TransactionTypeSelectorProps> = ({
             <TouchableOpacity
                 onPress={() => setTransactionType(TransactionTypes.REVENUE)}
                 className={clsx(
-                    'flex-row items-center p-2 flex-1 justify-center h-[58px]',
+                    'flex-row items-center p-2 flex-1 justify-center h-[58]',
                     typeId === TransactionTypes.REVENUE ? "bg-accent-brand" : "bg-background-tertiary"
                 )}
             >
@@ -37,7 +37,7 @@ export const TransactionTypeSelector: FC<TransactionTypeSelectorProps> = ({
             <TouchableOpacity
                 onPress={() => setTransactionType(TransactionTypes.EXPENSE)}
                 className={clsx(
-                    'flex-row items-center p-2 flex-1 justify-center h-[58px]',
+                    'flex-row items-center p-2 flex-1 justify-center h-[58]',
                     typeId === TransactionTypes.EXPENSE ? "bg-accent-red" : "bg-background-tertiary"
                 )}
             >

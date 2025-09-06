@@ -60,7 +60,7 @@ export const LoginForm = () => {
                 secureTextEntry
             />
 
-            <View className="flex-1 justify-between mt-8 mb-6 min-h-[250px]">
+            <View className="flex-1 justify-between mt-8 mb-6 min-h-[250]">
                 <AppButton
                     iconName="arrow-forward"
                     onPress={handleSubmit(onSubmit)}

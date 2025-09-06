@@ -30,7 +30,7 @@ export const Loading: FC<LoadingProps> = ({ setLoading }: LoadingProps) => {
     return (
         <SafeAreaView className="bg-background-primary items-center justify-center flex-1">
             <>
-                <Image className="h-[48px] w-[255px]" source={require("@/assets/logo.png")} />
+                <Image className="h-[48] w-[255]" source={require("@/assets/logo.png")} />
                 <ActivityIndicator color={colors.white} className="mt-20" />
             </>
         </SafeAreaView>

@@ -12,7 +12,7 @@ export const AuthHeader = () => {
         <View className="items-center justify-center w-full min-h-40">
             <Image
                 source={require("@/assets/logo.png")}
-                className="h-[48px] w-[255px]"
+                className="h-[48] w-[255]"
             />
         </View>
     )

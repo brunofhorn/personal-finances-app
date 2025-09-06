@@ -34,6 +34,9 @@ export type TransactionContextType = {
     loadMoreTransactions: () => Promise<void>
     loadings: Loadings
     handleLoadings: (params: HandleLoadingParams) => void
+    pagination: Pagination
+    searchText: string
+    setSearchText: (text: string) => void
 }
 
 export const TransactionContext = createContext({} as TransactionContextType)
@@ -57,6 +60,7 @@ export const TransactionContextProvider: FC<PropsWithChildren> = ({ children }) 
         revenue: 0,
         total: 0
     })
+    const [searchText, setSearchText] = useState<string>("")
 
     const fetchCategories = async () => {
         const categoriesResponse = await transactionService.getTransactionCategories()
@@ -76,7 +80,8 @@ export const TransactionContextProvider: FC<PropsWithChildren> = ({ children }) 
     const fetchTransactions = useCallback(async ({ page = 1 }: FetchTransactionsParams) => {
         const transactionResponse = await transactionService.getTransactions({
             page,
-            perPage: pagination.perPage
+            perPage: pagination.perPage,
+            searchText
         })
 
         if (page === 1) {
@@ -87,7 +92,7 @@ export const TransactionContextProvider: FC<PropsWithChildren> = ({ children }) 
 
         setTotalTransactions(transactionResponse.totalTransactions)
         setPagination({ ...pagination, page, totalRows: transactionResponse.totalRows, totalPages: transactionResponse.totalPages })
-    }, [pagination])
+    }, [pagination, searchText])
 
     const refreshTransactions = useCallback(async () => {
         const { page, perPage } = pagination
@@ -127,7 +132,10 @@ export const TransactionContextProvider: FC<PropsWithChildren> = ({ children }) 
                 refreshTransactions,
                 handleLoadings,
                 loadings,
-                loadMoreTransactions
+                loadMoreTransactions,
+                pagination, 
+                searchText,
+                setSearchText
             }}>
             {children}
         </TransactionContext.Provider>

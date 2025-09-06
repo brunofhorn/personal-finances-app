@@ -88,7 +88,7 @@ export const EditTransactionForm: FC<EditTransactionFormParams> = ({ transaction
                     placeholderTextColor={colors.gray[700]}
                     value={transaction.description}
                     onChangeText={(text) => setTransactionData("description", text)}
-                    className="text-white text-lg h-[50px] bg-background-primary my-2 rounded-[6] pl-4"
+                    className="text-white text-lg h-[50] bg-background-primary my-2 rounded-[6] pl-4"
                 />
 
                 {validationErrors?.description && <ErrorMessage>{validationErrors.description}</ErrorMessage>}
@@ -101,7 +101,7 @@ export const EditTransactionForm: FC<EditTransactionFormParams> = ({ transaction
                     precision={2}
                     minValue={0}
                     onChangeValue={(value) => setTransactionData("value", value ?? 0)}
-                    className="text-white text-lg h-[50px] bg-background-primary my-2 rounded-[6] pl-4"
+                    className="text-white text-lg h-[50] bg-background-primary my-2 rounded-[6] pl-4"
                 />
 
                 {validationErrors?.value && <ErrorMessage>{validationErrors.value}</ErrorMessage>}
